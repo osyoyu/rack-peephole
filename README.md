@@ -30,9 +30,29 @@ Visualization can be done using the `stackprof` utility  (see https://github.com
 $ stackprof --d3-flamegraph profile.dump > flamegraph.html
 ```
 
+As an alternative, Rack::Peephole provides `GET /peephole/start` and `GET /peephole/finish`.
 
-## Options
-TBD
+```
+$ curl http://localhost:3000/peephole/start
+```
+
+This returns a 200 immediately, and starts a StackProf session in the background.
+
+```
+$ curl http://localhost:3000/peephole/finish > profile.dump
+```
+
+
+## Query parameters
+Options passed to StackProf:
+
+- mode: Profiling mode (`cpu`, `wall`)
+- interval: Profiling interval (default: 1000)
+- raw: Collect raw samples (required for drawing flamegraphs, default: `false`)
+
+Options available only in `GET /peephole/{cpu,wall}`:
+
+- profile\_time\_seconds: Duration of profiling in seconds (default: 30)
 
 
 ## Development
