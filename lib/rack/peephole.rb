@@ -36,9 +36,9 @@ module Rack
       mode = env['REQUEST_PATH'].match(%r{^/peephole/(cpu|wall)/?})[1].to_sym
       return [404, headers, []] unless mode
 
-      interval = params['interval'] || 1000
+      interval = params['interval']&.to_i || 1000
       raw = !!(params['raw']) || false
-      profile_time_seconds = params['profile_time_seconds'] || 30
+      profile_time_seconds = params['profile_time_seconds']&.to_i || 30
 
       @stackprof_running = true
       StackProf.start(
